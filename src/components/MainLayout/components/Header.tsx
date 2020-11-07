@@ -10,6 +10,9 @@ import Menu from '@material-ui/core/Menu';
 import Cart from "components/MainLayout/components/Cart";
 import {Link} from 'react-router-dom';
 
+import Slide from '@material-ui/core/Slide';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -24,6 +27,10 @@ const useStyles = makeStyles((theme: Theme) =>
     homeLink: {
       color: 'white',
       textDecoration: 'none'
+    },
+    appBar: {
+      backgroundColor: '#3d5484',
+      padding: '0 8%'
     }
   }),
 );
@@ -42,8 +49,11 @@ export default function Header() {
     setAnchorEl(null);
   };
 
+  const trigger = useScrollTrigger();
+
   return (
-    <AppBar position="static">
+    <Slide appear={false} direction="down" in={!trigger}>
+    <AppBar className={classes.appBar}>
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           <Link className={classes.homeLink} to="/">Cycle store</Link>
@@ -83,5 +93,6 @@ export default function Header() {
         <Cart/>
       </Toolbar>
     </AppBar>
+    </Slide>
   );
 }

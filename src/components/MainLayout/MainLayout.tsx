@@ -34,7 +34,7 @@ const MainLayout: React.FC = ({children}) => {
   return (
     <>
       <Header/>
-      <main>
+      <main style={{paddingTop: '64px'}}>
         <Container className={classes.container} maxWidth="md">
           {children!}
         </Container>
