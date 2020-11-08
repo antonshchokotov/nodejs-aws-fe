@@ -78,6 +78,15 @@ const Form = (props: FormikProps<FormikValues>) => {
             required
           />
         </Grid>
+        <Grid item xs={12}>
+          <Field
+            component={TextField}
+            name="image"
+            label="Image URL (Optional)"
+            fullWidth
+            autoComplete="off"
+          />
+        </Grid>
         <Grid item container xs={12} justify="space-between">
           <Button
             color="primary"
@@ -106,11 +115,16 @@ export default function PageProductForm() {
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const onSubmit = (values: FormikValues) => {
+  const onSubmit = (values: FormikValues, { resetForm }: any) => {
     const formattedValues = ProductSchema.cast(values);
     const productToSave = id ? {...ProductSchema.cast(formattedValues), id} : formattedValues;
     axios.post(`${API_PATHS.bff}/products`, productToSave)
-      .then(() => history.push('/admin/products'));
+      .then(() => history.push('/admin/products'))
+      .catch(() => {
+        alert('Product was not created, please verify input data. Probably image url is not correct.')
+        setIsLoading(true)
+        setIsLoading(false)
+      });
   };
 
   useEffect(() => {
