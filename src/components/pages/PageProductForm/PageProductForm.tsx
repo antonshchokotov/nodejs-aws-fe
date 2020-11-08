@@ -34,6 +34,8 @@ const Form = (props: FormikProps<FormikValues>) => {
     // shouldConfirmLeave,
   } = props;
 
+  const history = useHistory()
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Grid container spacing={2}>
@@ -90,6 +92,7 @@ const Form = (props: FormikProps<FormikValues>) => {
         <Grid item container xs={12} justify="space-between">
           <Button
             color="primary"
+            onClick={()=>{history.push('/admin/products')}}
           >
             Cancel
           </Button>
@@ -115,7 +118,7 @@ export default function PageProductForm() {
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const onSubmit = (values: FormikValues, { resetForm }: any) => {
+  const onSubmit = (values: FormikValues) => {
     const formattedValues = ProductSchema.cast(values);
     const productToSave = id ? {...ProductSchema.cast(formattedValues), id} : formattedValues;
     axios.post(`${API_PATHS.bff}/products`, productToSave)
