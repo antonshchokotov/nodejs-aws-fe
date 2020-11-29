@@ -15,6 +15,10 @@ type CSVFileImportProps = {
   title: string
 };
 
+if (!localStorage.getItem('authorization_token')){
+  localStorage.setItem('authorization_token', 'WRONG_TOKEN');
+}
+
 export default function CSVFileImport({url, title}: CSVFileImportProps) {
   const classes = useStyles();
   const [file, setFile] = useState<any>();
@@ -37,6 +41,9 @@ export default function CSVFileImport({url, title}: CSVFileImportProps) {
         url,
         params: {
           name: encodeURIComponent(file.name)
+        },
+        headers: {
+          Authorization: `Basic ${localStorage.getItem('authorization_token')}`
         }
       })
       console.log('File to upload: ', file.name)
